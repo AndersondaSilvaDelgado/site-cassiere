@@ -1,0 +1,43 @@
+@import "~bootstrap/scss/bootstrap";
+
+.navbar-nav li:hover .dropdown-menu {
+    display: block;
+}
+
+/* rotate caret on hover */
+.dropdown-menu > li > a:hover:after {
+    text-decoration: underline;
+    transform: rotate(-90deg);
+}
+
+.cassiere-bg {
+    background-color: #ffceff;
+}
+
+.carousel {
+
+    margin-bottom: 10px;
+    max-height: 700px;
+    overflow: hidden;
+
+    .item img {
+      width: 100%;
+      height: auto;
+    }
+}
+
+.row {
+
+    margin-bottom: 15px;
+
+}
+
+.col {
+
+    img {
+        width:100%;
+        height: 230px;
+    }
+}
+
+a{text-decoration: none; color: #000;}
