@@ -11,30 +11,26 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('site.index');
-    }
-
-    public function index2()
-    {
-        $registros = Produto::where([
+        $produtos = Produto::where([
             'ativo' => 'S'
             ])->get();
 
-        return view('home.index', compact('registros'));
+        return view('site.index', compact('produtos'));
+
     }
 
     public function produto($id = null)
     {
         if( !empty($id) ) {
-            $registro = Produto::where([
+            $produto = Produto::where([
                 'id'    => $id,
                 'ativo' => 'S'
                 ])->first();
 
-            if( !empty($registro) ) {
-                return view('home.produto', compact('registro'));
+            if( !empty($produto) ) {
+                return view('site.produto', compact('produto'));
             }
         }
-        return redirect()->route('index');
+        return redirect()->route('site.index');
     }
 }

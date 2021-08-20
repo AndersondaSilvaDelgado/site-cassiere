@@ -17,7 +17,7 @@ class CreateProdutosTable extends Migration
             $table->id();
             $table->string('nome');
             $table->text('descricao');
-            $table->integer('qtde');
+            $table->integer('qtde')->default(0);
             $table->decimal('valor', 6, 2)->default(0);
             $table->string('imagem');
             $table->enum('ativo', ['S', 'N'])->default('S');

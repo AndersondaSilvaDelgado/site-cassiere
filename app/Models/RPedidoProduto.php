@@ -11,4 +11,16 @@ class RPedidoProduto extends Model
 
     protected $table = 'r_pedido_produtos';
 
+    protected $fillable = [
+        'pedido_id',
+        'produto_id',
+        'status',
+        'valor'
+    ];
+
+    public function produto()
+    {
+        return $this->belongsTo('App\Models\Produto', 'produto_id', 'id');
+    }
+
 }

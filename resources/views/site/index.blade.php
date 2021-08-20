@@ -33,104 +33,45 @@
 
     <div class="container mb-2 pr-5 pl-5">
         <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <input class="form-control me-2" type="search" placeholder="Pesquisar Produtos..." aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Pesquisar</button>
         </form>
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <a href="#">
+        <div class="row row-cols-md-4">
+            @foreach($produtos as $produto)
+            <div class="col col-index">
+                <a href="{{ route('site.produto', $produto->id) }}">
                     <div class="card">
-                        <img src="{{ asset('image/image1.jpg') }}" class="img-responsive card-img-top" alt="image1">
+                        <img src="{{ asset($produto->imagem) }}" class="img-responsive card-img-top" alt="{{ $produto->nome }}">
                         <div class="card-body">
-                            <p>Bolsa</p>
-                            <p>R$ 100,00</p>
+                            <p>{{ $produto->nome }}</p>
+                            <p>R$ {{ $produto->valor }}</p>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col">
-                <a href="#">
-                    <div class="card">
-                        <img src="{{ asset('image/image2.jpg') }}" class="img-responsive card-img-top" alt="image2">
-                        <div class="card-body">
-                            <a href="#">bolsa</a>
-                            <p>R$ 100,00</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#">
-                    <div class="card">
-                        <img src="{{ asset('image/image3.jpg') }}" class="img-responsive card-img-top" alt="image3">
-                        <div class="card-body">
-                            <a href="#">bolsa</a>
-                            <p>R$ 100,00</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#">
-                    <div class="card">
-                        <img src="{{ asset('image/image4.jpg') }}"  class="img-responsive card-img-top" alt="image1">
-                        <div class="card-body">
-                            <a href="#">bolsa</a>
-                            <p>R$ 100,00</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            @if ($loop->iteration % 4 == 0)
         </div>
-        <div class="row">
-            <div class="col">
-                <a href="#">
-                    <div class="card">
-                        <img src="{{ asset('image/image1.jpg') }}" class="img-responsive card-img-top" alt="image1">
-                        <div class="card-body">
-                            <p>Bolsa</p>
-                            <p>R$ 100,00</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#">
-                    <div class="card">
-                        <img src="{{ asset('image/image2.jpg') }}"  class="img-responsive card-img-top" alt="image1">
-                        <div class="card-body">
-                            <a href="#">bolsa</a>
-                            <p>R$ 100,00</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#">
-                    <div class="card">
-                        <img src="{{ asset('image/image3.jpg') }}" class="img-responsive card-img-top" alt="image1">
-                        <div class="card-body">
-                            <a href="#">bolsa</a>
-                            <p>R$ 100,00</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="#">
-                    <div class="card">
-                        <img src="{{ asset('image/image4.jpg') }}"  class="img-responsive card-img-top" alt="image1">
-                        <div class="card-body">
-                            <a href="#">bolsa</a>
-                            <p>R$ 100,00</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+        <div class="row row-cols-md-4">
+            @endif
+            @endforeach
         </div>
     </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Primeira</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
 
 @endsection
