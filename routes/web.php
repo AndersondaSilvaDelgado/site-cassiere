@@ -32,6 +32,8 @@ Route::get('/carrinho/compras', [CarrinhoController::class, 'compras'])->name('s
 Route::get('/carrinho/endereco', [CarrinhoController::class, 'endereco'])->name('site.carrinho.endereco');
 Route::post('/carrinho/cancelar', [CarrinhoController::class, 'cancelar'])->name('site.carrinho.cancelar');
 Route::get('/carrinho/pagamento', [CarrinhoController::class, 'pagamento'])->name('site.carrinho.pagamento');
+Route::get('/carrinho/finalizar', [CarrinhoController::class, 'finalizar'])->name('site.carrinho.finalizar');
+Route::post('/carrinho/frete', [CarrinhoController::class, 'frete'])->name('site.carrinho.frete');
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/produto/create', [ProdutoController::class, 'create'])->name('admin.produto.create');

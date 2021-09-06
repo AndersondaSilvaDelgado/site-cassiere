@@ -13,13 +13,14 @@ class CreatePedidosTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('pedidos');
+
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->enum('status', ['RE', 'PA', 'CA']); // Reservado, Pago, Cancelado
+            $table->enum('status', ['RE', 'FI', 'PA', 'CA']); // Reservado, Finalizado , Pago, Cancelado
             $table->decimal('desconto_pedido', 6, 2)->default(0);
             $table->decimal('valor_total', 6, 2)->default(0);
+            $table->decimal('frete', 6, 2)->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

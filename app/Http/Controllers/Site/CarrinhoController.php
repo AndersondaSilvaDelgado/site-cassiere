@@ -14,7 +14,6 @@ class CarrinhoController extends Controller
 
     function __construct()
     {
-        // obriga estar logado;
         $this->middleware('auth');
     }
 
@@ -64,6 +63,18 @@ class CarrinhoController extends Controller
             'produto_id' => $idproduto,
             'valor'      => $produto->valor,
             'status'     => 'RE'
+            ]);
+
+        RPedidoProduto::where([
+                'status'    => 'FI'
+            ])->update([
+                'status' => 'CA'
+            ]);
+
+        Pedido::where([
+                'status'    => 'FI'
+            ])->update([
+                'status' => 'CA'
             ]);
 
         $request->session()->flash('mensagem-sucesso', 'Produto adicionado ao carrinho com sucesso!');
@@ -155,18 +166,31 @@ class CarrinhoController extends Controller
             return redirect()->route('site.carrinho.index');
         }
 
+        $r_pedido_produtos = RPedidoProduto::where([
+            'pedido_id' => $idpedido
+            ])->get();
+
+        $total_pedido = 0;
+
+        foreach ($r_pedido_produtos as $pedido_produto){
+            $total_produto = $pedido_produto->valor - $pedido_produto->desconto;
+            $total_pedido += $total_produto;
+        }
+
         RPedidoProduto::where([
             'pedido_id' => $idpedido
             ])->update([
-                'status' => 'PA'
+                'status' => 'FI'
             ]);
+
         Pedido::where([
                 'id' => $idpedido
             ])->update([
-                'status' => 'PA'
+                'status' => 'FI',
+                'valor_total' => $total_pedido
             ]);
 
-        return redirect()->route('site.carrinho.endereco');
+        return redirect()->route('site.carrinho.finalizar');
 
     }
 
@@ -236,6 +260,7 @@ class CarrinhoController extends Controller
             ])->exists();
 
         if( !$check_pedido_cancel ) {
+
             Pedido::where([
                 'id' => $idpedido
             ])->update([
@@ -256,8 +281,32 @@ class CarrinhoController extends Controller
         return view('site.carrinho.endereco');
     }
 
-    public function pagamento(){
-        return view('site.carrinho.pagamento');
+    public function finalizar(){
+
+        $pedidos = Pedido::where([
+            'status'  => 'FI',
+            'user_id' => Auth::id()
+            ])->get();
+
+        return view('site.carrinho.finalizar', compact('pedidos'));
+    }
+
+    public function frete(Request $request)
+    {
+
+        $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?nCdEmpresa=08082650&sDsSenha=564321&sCepOrigem=70002900&sCepDestino=04547000&nVlPeso=1&nCdFormato=1&nVlComprimento=20&nVlAltura=20&nVlLargura=20&sCdMaoPropria=n&nVlValorDeclarado=0&sCdAvisoRecebimento=n&nCdServico=04510&nVlDiametro=0&StrRetorno=xml&nIndicaCalculo=3";
+
+        $unparsedResult = file_get_contents($url);
+        $parsedResult = simplexml_load_string($unparsedResult);
+
+        Pedido::where([
+            'id' => $request->id
+        ])->update([
+            'frete' => str_replace(",",".", strval($parsedResult->cServico->Valor))
+        ]);
+
+        return redirect()->route('site.carrinho.finalizar');
+
     }
 
 }

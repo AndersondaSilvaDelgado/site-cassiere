@@ -50,6 +50,8 @@ class ProdutoController extends Controller
 
         }
 
+        $data['valor'] = str_replace('.', ',', $data['valor']);
+
         Produto::create($data);
         return redirect()->route('admin.produto.index');
 
@@ -79,6 +81,8 @@ class ProdutoController extends Controller
         {
             return redirect()->back();
         }
+
+        $produto->valor = str_replace('.', ',', $produto->valor);
 
         return view('admin.produto.edit', compact('produto'));
     }

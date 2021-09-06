@@ -92,6 +92,6 @@
 
     <script src="{{ asset('site/jquery.js') }}"></script>
     <script src="{{ asset('site/bootstrap.js') }}"></script>
-    <script src="{{ asset('site/carrinho.js') }}"></script>
+    <script src="{{ asset('site/site.js?v=1') }}"></script>
     </body>
 </html>
